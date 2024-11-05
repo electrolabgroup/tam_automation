@@ -156,11 +156,20 @@ def index():
 
 from flask import send_file, jsonify
 
+import os
+import pandas as pd
+import psycopg2
+from flask import Flask, send_file, jsonify
+
 @app.route('/download')
 def download():
     # Get the user's Downloads folder
-    download_folder = os.path.join(os.path.expanduser("~"), "Downloads")
-    download_file_path = os.path.join(download_folder, 'Spares_Product_Segmentation.xlsx')
+    # download_folder = os.path.join(os.path.expanduser("~"), "Downloads")
+    download_file_path = os.path.join( 'Spares_Product_Segmentation.xlsx')
+
+    # Check if the file already exists and delete it
+    if os.path.exists(download_file_path):
+        os.remove(download_file_path)
 
     try:
         # Create the Excel file with the data
@@ -236,6 +245,7 @@ def download():
         print(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500
 
+
 def create_excel_file(df, file_name):
     with pd.ExcelWriter(file_name, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Data')
@@ -292,6 +302,8 @@ def download_file2():
         # Create the Excel file with formatting
         create_excel_file(df, file_name)
 
+
+        # Send the file to the client for download
         return send_file(file_name, as_attachment=True)
 
     except Exception as e:
