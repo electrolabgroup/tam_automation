@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpThemToBuy</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+
+    <style>
+        /* Center the content and set it to 80% width */
+        .container-fluid {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        /* Set the max height for the table container */
+        .scrollable-table {
+            max-height: 500px; /* Keep height manageable */
+            overflow-y: auto;  /* Enable vertical scroll */
+            overflow-x: auto;  /* Enable horizontal scroll if needed */
+            width: 100%;       /* Ensure the table container takes full width within the 80% container */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #00AB95 #f0f0f0; /* For Firefox */
+        }
+
+        /* For WebKit browsers (Chrome, Safari) */
+        .scrollable-table::-webkit-scrollbar {
+            width: 8px; /* Set the width of the scrollbar */
+        }
+        
+        .scrollable-table::-webkit-scrollbar-track {
+            background: #f0f0f0; /* Background of the scrollbar track */
+        }
+
+        .scrollable-table::-webkit-scrollbar-thumb {
+            background-color: #f8f8f8; /* Color of the scrollbar thumb */
+            border-radius: 2px; /* Rounded edges */
+        }
+
+        .nav-tabs {
+            width: 100%; /* Tabs will take up full width of the container */
+            display: flex; /* Use flexbox for equal spacing */
+            justify-content: space-between; /* Space out tabs evenly */
+            flex-wrap: wrap; /* Ensure tabs wrap to the next line if needed */
+        }
+
+        .nav-tabs .nav-item {
+            flex: 1; /* Allow all tabs to take equal space */
+            text-align: center; /* Center-align tab content */
+        }
+
+        /* Tab styles */
+        .nav-tabs .nav-link {
+            background-color: #ffffff; /* Tab background color */
+            color: rgb(0, 0, 0); /* Tab text color */
+            padding: 2px; /* Padding for the tabs */
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #00AB95; /* Active tab background color */
+            color: white; /* Active tab text color */
+        }
+
+        .nav-tabs .nav-link:hover {
+            background-color: #00AB95; /* Hover effect */
+            color: white; /* Hover text color */
+        }
+
+        /* Adjust the line's width */
+        hr {
+            width: 100%; /* Make the horizontal line 100% within the container */
+            border-top: 2px solid #101316;
+        }
+
+        .table-container {
+            border: 1px solid #dee2e6; /* Border for the table container */
+            width: 100%; /* Ensure the container takes full width */
+            margin: 0; /* Remove any margin */
+            padding: 0; /* Remove any padding */
+        }
+
+        table {
+            width: 100%; /* Ensure the table takes full width */
+            table-layout: auto;
+            font-size: 12px; /* Allows columns to adjust based on content */
+            border-collapse: collapse; /* Remove gaps between cells */
+        }
+
+        th, td {
+            text-align: left; /* Align text to the left */
+            padding: 2px; /* Add some padding */
+            border: 1px solid #dee2e6; /* Add border to cells */
+        }
+
+        /* Style for table header */
+        th {
+            background-color: black; /* Black background for header */
+            color: white; /* White text color for header */
+        }
+
+        /* Remove sort arrows from table headers */
+        th::after {
+            display: none; /* Hide the sort arrows */
+        }
+        .underlined-title {
+            text-decoration: underline;
+            text-decoration-color: #000000; /* Optional: Choose underline color */
+            text-decoration-thickness: 3px; /* Optional: Thickness of the underline */
+            text-underline-offset: 5px; /* Optional: Offset distance between text and underline */
+        }
+
+        .btn-green {
+            background-color: #00AB95; /* Green background */
+            border-color: #00AB95; /* Match border color */
+            color: white; /* White text color */
+            margin-left: 10px; /* Space between dropdown and button */
+        }
+        
+        .button-container {
+        display: flex;
+        align-items: center;
+        gap: 2px; /* Space between buttons */
+    }
+
+    /* Shared style for both buttons */
+    .button-style {
+        width: 110px; /* Fixed width */
+        height: 40px; /* Fixed height */
+        font-size: 14px;
+        color: white;
+        background-color: #00AB95; /* Button background color */
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        padding: 0;
+        margin: 0;
+    }
+
+    .button-style:hover {
+        background-color: #009e87; /* Darker shade on hover */
+    }
+    .sentinai-title {
+        background-color: #00AB95; /* Green background */
+        color: white; /* White text */
+        text-align: center; /* Center align the text */
+        padding: 8px 0; /* Vertical padding */
+        font-size: 18px; /* Font size */
+        margin-top: 10px;
+        border-radius: 5px; /* Optional: rounded corners */
+    }
+    .custom-sticky-header {
+        display: flex; /* Use flexbox for alignment */
+        position: sticky;
+        top: 0; /* Keep the header at the top of the scrollable area */
+        background-color: black; /* Black background */
+        color: white; /* White text */
+            z-index: 10; /* Ensure it stays above other content */
+    }
+
+    .header-cell {
+        padding: 10px; /* Add some padding for spacing */
+        border: 1px solid #ccc; /* Optional: border for visual separation */
+        /* Customize widths as needed */
+    }
+    
+    .header-cell:nth-child(1) {
+        width: 16%; /* Width for Item Group */
+    }
+
+    .header-cell:nth-child(2) {
+        width: 10%; /* Width for Customer */
+    }
+
+    .header-cell:nth-child(3) {
+        width: 9%; /* Width for Customer Group */
+    }
+
+    .header-cell:nth-child(4) {
+        width: 12%; /* Width for Territory */
+    }
+
+    .header-cell:nth-child(5) {
+        width: 12%; /* Width for Tam Count */
+    }
+
+    .header-cell:nth-child(6) {
+        width: 12%; /* Width for Count Sales */
+    }
+
+    .header-cell:nth-child(7) {
+        width: 30%; /* Width for Count Of Open Opportunity */
+    }
+    .header-cell{
+        font-size: 14px;
+    }
+    .scrollable-table th:nth-child(1),
+    .scrollable-table td:nth-child(1) {
+        width: 16%; 
+    }
+
+    .scrollable-table th:nth-child(2),
+    .scrollable-table td:nth-child(2) {
+        width: 10%;
+    }
+
+    .scrollable-table th:nth-child(3),
+    .scrollable-table td:nth-child(3) {
+        width: 9%; 
+    }
+
+    .scrollable-table th:nth-child(4),
+    .scrollable-table td:nth-child(4) {
+        width: 12%; 
+    }
+
+    .scrollable-table th:nth-child(5),
+    .scrollable-table td:nth-child(5) {
+        width: 12%; 
+    }
+
+    .scrollable-table th:nth-child(6),
+    .scrollable-table td:nth-child(6) {
+        width: 12%;
+    }
+
+    .scrollable-table th:nth-child(7),
+    .scrollable-table td:nth-child(7) {
+        width: 30%; 
+    }
+    .scrollable-table th {
+        display: none; 
+    }
+    .scrollable-table table {
+        font-size: 12px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <h1 class="mb-4 text-center underlined-title">PRODUCT SEGMENTATION DATA - MACHINE</h1>
+    
+        <div class="mt-3">
+            <div class="button-container">
+                <a href="/" class="button-style" aria-label="Go to Spares">Go Spares</a>
+                <a href="/download2" class="button-style" aria-label="Download Excel">   Download  </a>
+            </div>
+        </div>
+        <br>
+        <hr style="border-top: 2px solid #101316; margin-top: 10px;">
+
+        <div class="sentinai-title">SentinAI</div>
+
+        <hr style="border-top: 2px solid #101316; margin-top: 10px;">
+        <div class="custom-sticky-header">
+            <div class="header-cell">Customer</div>
+            <div class="header-cell">Customer Group</div>
+            <div class="header-cell">Territory</div>
+            <div class="header-cell">Tam Count (Total Quantity Available with Customer)</div>
+            <div class="header-cell">Count Sales (According to the Quantity Booked)</div>
+            <div class="header-cell">Count Of Open Opportunity</div>
+            <div class="header-cell">Item Group</div>
+
+        </div>
+        <div class="tab-content">
+                <div class="table-container scrollable-table">
+                    {{ machine_table_html|safe }}
+                </div>
+        </div>
+        <br>
+        <hr style="border-top: 2px solid #101316; margin-top: 10px;">
+        <div>
+            {{ graph_html|safe }}
+        </div>
+        <br>
+        <br>
+        <br>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
